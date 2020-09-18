@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@RequestMapping("/my-api")
 public class CityRestController {
 
     private CityService cityService;
@@ -18,7 +19,7 @@ public class CityRestController {
         this.cityService = cityService;
     }
 
-    @RequestMapping(path = "/get-all-city")
+    @RequestMapping(path = "/get-all-city", method = RequestMethod.GET)
     public ResponseModel<List<CityModel>> getAllCity(){
         ResponseModel<List<CityModel>> result = new ResponseModel<>();
         List<CityModel> data = cityService.getAllCity();
@@ -29,7 +30,7 @@ public class CityRestController {
         return result;
     }
 
-    @RequestMapping(path = "/get-by-countryCode")
+    @RequestMapping(path = "/get-by-countryCode", method = RequestMethod.GET)
     public ResponseModel<List<CityModel>> getByContryCode(@RequestParam String countryCode, HttpServletRequest request){
         String param = request.getParameter("countryCode");
 
@@ -45,7 +46,7 @@ public class CityRestController {
         return result;
     }
 
-    @RequestMapping(path = "/country/{countryCode}")
+    @RequestMapping(path = "/country/{countryCode}", method = RequestMethod.GET)
     public ResponseModel<List<CityModel>> getByContryCode2(@PathVariable("countryCode") String countryCode, HttpServletRequest request){
         String param = request.getRequestURI();
 
@@ -61,7 +62,7 @@ public class CityRestController {
         return result;
     }
 
-    @RequestMapping(path = "/country/{countryCode}/newds")
+    @RequestMapping(path = "/country/{countryCode}/newds", method = RequestMethod.GET)
     public ResponseModel<List<CityModel>> getByContryCode3(@PathVariable("countryCode") String countryCode, HttpServletRequest request){
         String param = request.getRequestURI();
 
@@ -70,6 +71,22 @@ public class CityRestController {
 
         ResponseModel<List<CityModel>> result = new ResponseModel<>();
         List<CityModel> data = cityService.getByContryCodeWithNewDs(countryCode);
+        result.setData(data);
+        result.setResponseCode(200);
+        result.setResponseMessage("OK");
+
+        return result;
+    }
+
+    @RequestMapping(path = "/inquiry/city", method = RequestMethod.POST)
+    public ResponseModel<List<CityModel>> inquiryCity(@RequestBody CityInquiryModel cityInquiryModel, HttpServletRequest request){
+        String param = request.getRequestURI();
+
+        System.out.println("param "+param);
+        System.out.println("cityInquiryModel "+cityInquiryModel.toString());
+
+        ResponseModel<List<CityModel>> result = new ResponseModel<>();
+        List<CityModel> data = cityService.getCityByModel(cityInquiryModel);
         result.setData(data);
         result.setResponseCode(200);
         result.setResponseMessage("OK");

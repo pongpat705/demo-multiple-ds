@@ -2,6 +2,7 @@ package org.maoz.training.app.service;
 
 import net.bytebuddy.asm.Advice;
 import org.maoz.training.app.entity.City;
+import org.maoz.training.app.model.CityInquiryModel;
 import org.maoz.training.app.model.CityModel;
 import org.maoz.training.app.repository.AppRepository;
 import org.maoz.training.app.repository.CityRepository;
@@ -42,6 +43,26 @@ public class CityService {
         Map<String, Object> citeria = new HashMap<>();
         try {
             citeria.put("countryCode", countryCode);
+            cityList = appRepository.findByCriteria(citeria);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return cityList;
+
+    }
+
+    public List<CityModel> getCityByModel(CityInquiryModel cityInquiryModel) {
+
+        List<CityModel> cityList = null;
+        Map<String, Object> citeria = new HashMap<>();
+        try {
+            if(null != cityInquiryModel.getCountryCode()){
+                citeria.put("countryCode", cityInquiryModel.getCountryCode());
+            }
+            if(null != cityInquiryModel.getName()){
+                citeria.put("name", cityInquiryModel.getCountryCode());
+            }
             cityList = appRepository.findByCriteria(citeria);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
