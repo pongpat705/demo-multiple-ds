@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
@@ -21,12 +22,13 @@ public class AppConfiguration {
 
 
     @Bean("myDs")
-    public DataSource getDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName(dbDriver);
-        dataSourceBuilder.url(dbUrl);
-        dataSourceBuilder.username(dbUserName);
-        dataSourceBuilder.password(dbPassword);
-        return dataSourceBuilder.build();
+    public DataSource mysqlDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(dbDriver);
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUserName);
+        dataSource.setPassword(dbPassword);
+
+        return dataSource;
     }
 }

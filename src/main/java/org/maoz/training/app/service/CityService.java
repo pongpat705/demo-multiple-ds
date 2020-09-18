@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CityService {
@@ -37,8 +39,25 @@ public class CityService {
     public List<CityModel> getByContryCodeWithNewDs(String countryCode) {
 
         List<CityModel> cityList = null;
+        Map<String, Object> citeria = new HashMap<>();
         try {
-            cityList = appRepository.findByCountryCode(countryCode);
+            citeria.put("countryCode", countryCode);
+            cityList = appRepository.findByCriteria(citeria);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return cityList;
+
+    }
+
+    public List<CityModel> getByNameWithNewDs(String name) {
+
+        List<CityModel> cityList = null;
+        Map<String, Object> citeria = new HashMap<>();
+        try {
+            citeria.put("name", name);
+            cityList = appRepository.findByCriteria(citeria);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -77,17 +77,4 @@ public class CityRestController {
         return result;
     }
 
-    @RequestMapping(path = "/inquiry/country")
-    public ResponseModel<List<CityModel>> inquiryCity(@RequestBody CityInquiryModel cityInquiryModel, HttpServletRequest request){
-
-
-        ResponseModel<List<CityModel>> result = new ResponseModel<>();
-//        List<CityModel> data =
-//                cityService.getByContryCodeWithNewDs(countryCode);
-//        result.setData(data);
-        result.setResponseCode(200);
-        result.setResponseMessage("OK");
-
-        return result;
-    }
 }
