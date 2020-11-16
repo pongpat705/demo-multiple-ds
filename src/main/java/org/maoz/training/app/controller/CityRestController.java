@@ -19,6 +19,7 @@ public class CityRestController {
         this.cityService = cityService;
     }
 
+    @CrossOrigin("*")
     @RequestMapping(path = "/get-all-city", method = RequestMethod.GET)
     public ResponseModel<List<CityModel>> getAllCity(){
         ResponseModel<List<CityModel>> result = new ResponseModel<>();
